@@ -17,8 +17,11 @@ int countBulletFrame;    //Bullet Time Counter
 int bulletNum;           //Bullet Order Number
 
 /*--------Put Variables Here---------*/
-int life;
-
+final int LIFE_THREE = 0;
+final int LIFE_TWO   = 1;
+final int LIFE_ONE   = 2;
+final int LIFE_NONE  = 3;
+int lifeState;
 
 void setup() {
 
@@ -66,6 +69,7 @@ void draw() {
     checkAlienDead();/*finish this function*/
     checkShipHit();  /*finish this function*/
 
+    
     countBulletFrame+=1;
     break;
 
@@ -140,11 +144,29 @@ int x = 78;
 int y = 459;
 int spacing = 25; 
 int endCircle = 128; 
+
+switch (lifeState){
+  case LIFE_THREE:
+   endCircle = 128;
+   break;
+  case LIFE_TWO:
+   endCircle = 103;
+   break;
+  case LIFE_ONE:
+   endCircle = 78;
+   break;
+  case LIFE_NONE:
+   endCircle = 0;
+   status = GAME_LOSE;
+   break;
+}
+
 while(x <= endCircle) { 
 ellipse(x, y , 15, 15); 
 x = x + spacing; 
 } 
-  
+
+
   /*---------Draw Ship Life---------*/
 }
 
@@ -252,6 +274,7 @@ int r = int(random(30));
 
 /*---------Check Laser Hit Ship-------------*/
 void checkShipHit() {
+  
   int shipSize = 15;
   for (int i=0; i<lList.length-1; i++) {
     Laser laser = lList[i];
@@ -264,7 +287,8 @@ void checkShipHit() {
     && lList[i].lY >= ship.posY - shipSize  ) {
       /*-------do something------*/
       removeLaser(lList[i]);
-      life--;
+      
+      lifeState++;
 
     }
   }
@@ -377,6 +401,7 @@ void statusCtrl() {
 
     case GAME_START:
       status = GAME_PLAYING;
+      lifeState = LIFE_THREE;
       break;
 
       /*-----------add things here--------*/
