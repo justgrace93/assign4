@@ -165,8 +165,6 @@ while(x <= endCircle) {
 ellipse(x, y , 15, 15); 
 x = x + spacing; 
 } 
-
-
   /*---------Draw Ship Life---------*/
 }
 
@@ -381,8 +379,7 @@ void reset() {
   bulletNum = 0;
 
   /*--------Init Variable Here---------*/
-  
-
+ 
   /*-----------Call Make Alien Function--------*/
   alienMaker(53,12);
 
@@ -403,6 +400,13 @@ void statusCtrl() {
       status = GAME_PLAYING;
       lifeState = LIFE_THREE;
       break;
+    case GAME_PLAYING:
+      status = GAME_PAUSE;
+      break;
+    case GAME_PAUSE:
+      status = GAME_PLAYING;
+      break;
+
 
       /*-----------add things here--------*/
 
